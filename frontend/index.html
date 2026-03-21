@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>AI-Powered Cyberbullying Prevention System</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="light">
+    <div class="app">
+      <header class="topbar" role="banner">
+        <div class="brand">
+          <svg class="logo" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#0b67d0" />
+            <path d="M7 12h10M7 8h10M7 16h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="title">AI-Powered Cyberbullying Prevention</div>
+            <div class="subtitle">Safe, anonymous support and reporting</div>
+          </div>
+        </div>
+        <nav class="main-nav" role="navigation" aria-label="Main navigation">
+          <ul>
+            
+            <li><a href="#talk" id="navTalk">Talk</a></li>
+            <li><a href="#report" id="navReport">Report</a></li>
+            <li><a href="#roleplay" id="navRoleplay">Roleplay</a></li>
+             <li><a href="mood.html" id="navMood">Mood</a></li>
+          </ul>
+        </nav>
+
+        <div class="top-actions">
+          <button class="btn ghost small" id="adminLink" title="Administrator">Admin</button>
+          <!-- Theme toggle uses an inline SVG so we can swap paths for sun/moon -->
+          <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+            <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="#0b67d0"></path>
+            </svg>
+          </button>
+          <button id="mobileMenuBtn" class="icon-btn" aria-label="Open menu">☰</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section class="hero">
+          <div class="hero-right">
+            <div class="how-it-works">
+              <h3>How it works</h3>
+              <ul>
+                <li><strong>Talk:</strong> Paste a message and get an empathetic response and safer reply suggestions.</li>
+                <li><strong>Report:</strong> File a secure report with optional screenshot for admin review.</li>
+                <li><strong>Roleplay:</strong> Practice responding in a safe, controlled simulation.</li>
+                <li><strong>Mood:</strong> Track your mood and keep a private journal entry.</li>
+              </ul>
+              <div style="margin-top:12px"><button class="btn" id="startTalkSmall">Start a quick talk</button></div>
+            </div>
+
+            <div class="mini-card" style="margin-top:12px">
+              <div class="mini-card-title">Mood quick view</div>
+              <div id="moodPreview" class="muted">Your private mood timeline is empty — add your first mood to begin tracking how you feel over time.</div>
+            </div>
+          </div>
+              <div class="how-it-works">
+                <h3>How it works</h3>
+                <ul>
+                  <li><strong>Talk:</strong> Paste a message and get an empathetic response and safer reply suggestions.</li>
+                  <li><strong>Report:</strong> File a secure report with optional screenshot for admin review.</li>
+                  <li><strong>Roleplay:</strong> Practice calm replies in a safe simulation.</li>
+                  <li><strong>Mood:</strong> Track your mood and keep a private journal entry.</li>
+                </ul>
+                <div style="margin-top:12px"><button class="btn" id="startTalkSmall">Start a quick talk</button></div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="features">
+          <div class="feature-card">
+            <h3>I want to talk</h3>
+            <p>Paste a message or conversation. Our AI engine analyzes for bullying and offers compassionate responses and alternative wording.</p>
+            <button class="btn small" id="talkCardBtn">Open</button>
+          </div>
+          <div class="feature-card">
+            <h3>I want to report</h3>
+            <p>Securely submit incident details and screenshots for review by admins.</p>
+            <button class="btn small" id="reportCardBtn">Report</button>
+          </div>
+          <div class="feature-card">
+            <h3>Roleplay</h3>
+            <p>Practice responding in a safe, controlled simulation.</p>
+            <button class="btn small" id="roleplayCardBtn">Practice</button>
+          </div>
+        </section>
+
+        <section class="testimonials" style="margin-top:20px;display:flex;gap:12px;align-items:stretch;flex-wrap:wrap">
+          <div class="feature-card" style="flex:2">
+            <h3>Why this helps</h3>
+            <p>We combine empathetic AI responses, practical rephrasing suggestions, and secure reporting tools to help you feel safer online. Everything is private on your device unless you choose to report.</p>
+          </div>
+          <div class="feature-card" style="flex:1">
+            <h3>What users say</h3>
+            <div class="muted" style="font-size:13px">“The roleplay helped me craft a reply that kept me calm — I felt supported.” — Student</div>
+            <div style="margin-top:8px" class="muted" style="font-size:13px">“I reported an incident and the admin acknowledged it quickly.” — Parent</div>
+          </div>
+        </section>
+
+        <section class="helpline-banner">
+          <strong>Helpline:</strong> <span id="helplineNumber">National Mental Health Helpline: 08046110007</span>
+          <a class="help-link" href="https://www.cybercrime.gov.in/" target="_blank">Report to Cybercrime India</a>
+        </section>
+      </main>
+
+      <footer class="footer site-footer">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div class="title">AI-Powered Cyberbullying Prevention</div>
+            <div class="muted">Private & anonymous. If you are in immediate danger, contact local emergency services.</div>
+          </div>
+          <div class="footer-col">
+            <div class="title">Quick links</div>
+            <ul class="footer-links">
+              <li><a href="#" id="ftTalk">I want to talk</a></li>
+              <li><a href="#" id="ftReport">I want to report</a></li>
+              <li><a href="admin.html">Admin</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="title">Get help</div>
+            <div class="muted">National Mental Health Helpline: <a href="tel:08046110007">08046110007</a></div>
+            <a class="help-link" href="https://www.cybercrime.gov.in/" target="_blank">Report to Cybercrime India</a>
+          </div>
+        </div>
+        <div class="footer-bottom">© <span id="year"></span> AI-Powered Cyberbullying Prevention System</div>
+      </footer>
+    </div>
+
+    <!-- Admin UI moved to admin.html; admin modal removed from homepage -->
+
+    <!-- Talk modal -->
+    <div id="talkModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="talkTitle">
+      <div class="modal-panel">
+        <header>
+          <h2 id="talkTitle">I want to talk</h2>
+          <button class="close" data-close>&times;</button>
+        </header>
+        <div class="modal-body">
+          <label for="talkInput" class="sr-only">Paste message</label>
+          <textarea id="talkInput" placeholder="Paste the conversation or message here..."></textarea>
+          <div class="row">
+            <button id="analyzeBtn" class="btn primary">Analyze</button>
+            <button id="openRoleplay" class="btn outline">Open Roleplay</button>
+          </div>
+          <div id="analyzeResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mood modal -->
+    <div id="moodModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="moodTitle">
+      <div class="modal-panel">
+        <header>
+          <h2 id="moodTitle">Mood Tracker</h2>
+          <button class="close" data-close>&times;</button>
+        </header>
+        <div class="modal-body">
+          <label for="moodSelect">How are you feeling?</label>
+          <select id="moodSelect">
+            <option value="positive">Positive</option>
+            <option value="neutral">Neutral</option>
+            <option value="sad">Sad</option>
+            <option value="angry">Angry</option>
+          </select>
+          <label for="moodEntry">Journal entry (optional)</label>
+          <textarea id="moodEntry" placeholder="Write a short note about how you're feeling..."></textarea>
+          <div class="row">
+            <button id="moodSubmit" class="btn primary">Save Mood</button>
+            <button class="btn ghost" data-close>Close</button>
+          </div>
+          <div id="moodStatus" class="result"></div>
+          <div id="moodList" style="margin-top:12px"></div>
+        </div>
+      </div>
+    </div>
+      <!-- Mood now has its own page: mood.html -->
+
+    <!-- Roleplay modal -->
+    <div id="roleplayModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="roleplayTitle">
+      <div class="modal-panel">
+        <header>
+          <h2 id="roleplayTitle">Roleplay Simulation</h2>
+          <button class="close" data-close>&times;</button>
+        </header>
+        <div class="modal-body">
+          <label for="scenarioSelect">Scenario</label>
+          <select id="scenarioSelect">
+            <option value="default">Practice responding calmly</option>
+            <option value="direct_insult">Direct insult</option>
+            <option value="passive_aggressive">Passive aggressive message</option>
+          </select>
+          <label for="roleplayResponse">Your response</label>
+          <textarea id="roleplayResponse" placeholder="Write how you'd respond..."></textarea>
+          <div class="row">
+            <button id="roleplayBtn" class="btn primary">Simulate</button>
+            <button class="btn ghost" data-close>Close</button>
+          </div>
+          <div id="roleplayResult" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Report modal -->
+    <div id="reportModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="reportTitle">
+      <div class="modal-panel">
+        <header>
+          <h2 id="reportTitle">Report an incident</h2>
+          <button class="close" data-close>&times;</button>
+        </header>
+        <div class="modal-body">
+          <form id="reportForm">
+            <label>Name (optional)</label>
+              <input type="text" name="name" id="reporterName" placeholder="Your name" required>
+            <label>Details</label>
+            <textarea name="details" placeholder="Details of the incident..." required></textarea>
+            <label>Screenshot (optional)</label>
+            <input type="file" name="screenshot" accept="image/*">
+            <div class="row">
+              <button type="submit" class="btn primary">Submit Report</button>
+              <button type="button" class="btn ghost" data-close>Cancel</button>
+            </div>
+          </form>
+          <div id="reportStatus" class="result"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chat modal -->
+    <div id="chatModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="chatTitle">
+      <div class="modal-panel">
+        <header>
+          <h2 id="chatTitle">Support Chat</h2>
+          <button class="close" data-close>&times;</button>
+        </header>
+        <div class="modal-body">
+          <div id="chatMessages" style="max-height:320px;overflow:auto;padding:8px;border-radius:6px;border:1px solid #eef6ff;background:#fff"></div>
+          <div style="display:flex;gap:8px;margin-top:10px">
+            <input id="chatInput" type="text" placeholder="Type a message..." style="flex:1;padding:8px;border-radius:8px;border:1px solid #e6eefc">
+            <button id="chatSend" class="btn">Send</button>
+            <button id="chatClear" class="btn ghost">Clear</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+    <!-- Floating chat button -->
+    <button id="openChatBtn" class="chat-float" aria-label="Open support chat" title="Open support chat">
+      <!-- new chat icon: bubble with three dots -->
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <path d="M4 4h16v10a2 2 0 0 1-2 2H9l-5 4V6a2 2 0 0 1 2-2z" fill="#ffffff" opacity="0.02"/>
+        <path d="M20 4H4v12l4-3h12a1 1 0 0 0 1-1V5a1 1 0 0 0-1-1z" fill="#0b67d0"/>
+        <circle cx="8.5" cy="10.5" r="1" fill="#fff"/>
+        <circle cx="12" cy="10.5" r="1" fill="#fff"/>
+        <circle cx="15.5" cy="10.5" r="1" fill="#fff"/>
+      </svg>
+    </button>
+  </body>
+</html>

@@ -1,0 +1,191 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Admin Dashboard — Cyberbullying Prevention</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <svg class="logo" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#0b67d0" />
+            <path d="M7 12h10M7 8h10M7 16h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="title">Admin Dashboard</div>
+            <div class="subtitle">Manage reports</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="backHome" class="btn ghost small" style="display:none">Home</button>
+          <button id="logoutBtn" class="btn ghost small" style="display:none">Logout</button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section style="margin-top:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h2>Reports</h2>
+            <div style="display:flex;align-items:center;gap:8px">
+              <span id="maskDisplay" class="muted">(token hidden)</span>
+              <button id="downloadReports" class="btn small" style="display:none">Download CSV</button>
+            </div>
+          </div>
+          <div id="adminReports" style="margin-top:12px">
+            <div class="muted">Loading reports…</div>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <div class="muted">Admin actions are protected by a token.</div>
+      </footer>
+    </div>
+
+      <script>
+      // Minimal admin page script
+      (function(){
+        const API_BASE = 'http://127.0.0.1:8000/api'
+        let token = localStorage.getItem('admin_token')
+        const adminReports = document.getElementById('adminReports')
+        const maskDisplay = document.getElementById('maskDisplay')
+        const logoutBtn = document.getElementById('logoutBtn')
+        const backHome = document.getElementById('backHome')
+
+        // Sync theme from localStorage
+        const savedTheme = localStorage.getItem('theme')
+        if(savedTheme === 'dark') document.body.classList.add('dark')
+
+        // Hide/show header buttons depending on login state
+        function updateHeaderButtons(){
+          if(!token){
+            backHome.style.display = 'none'
+            logoutBtn.style.display = 'none'
+          } else {
+            backHome.style.display = ''
+            logoutBtn.style.display = ''
+          }
+        }
+
+        updateHeaderButtons()
+
+        function show(msg){ adminReports.innerHTML = '<div class="muted">'+(msg||'')+'</div>' }
+
+        if(!token){
+          // show simple login within this page
+          adminReports.innerHTML = `
+            <div style="max-width:520px">
+              <p>Please enter admin token to continue.</p>
+              <input id="pageToken" type="password" placeholder="Admin token" style="width:100%;padding:8px;border-radius:8px;border:1px solid #e6eefc" />
+              <div style="margin-top:8px;display:flex;gap:8px">
+                <button id="pageLogin" class="btn primary">Login</button>
+                <button id="pageCancel" class="btn ghost">Cancel</button>
+              </div>
+              <div id="pageMsg" class="muted" style="margin-top:8px"></div>
+            </div>
+          `
+          document.getElementById('pageCancel').addEventListener('click', ()=>{ window.location = 'index.html' })
+          document.getElementById('pageLogin').addEventListener('click', async ()=>{
+            const v = document.getElementById('pageToken').value.trim()
+            if(!v) return document.getElementById('pageMsg').textContent = 'Enter a token.'
+            localStorage.setItem('admin_token', v)
+            token = v
+            updateHeaderButtons()
+            window.location.reload()
+          })
+          return
+        }
+
+        // show masked token
+        maskDisplay.textContent = token.length>6 ? token.slice(0,3)+'…'+token.slice(-3) : '•••••'
+
+        // wire Download CSV button (visible when logged in)
+        const downloadBtn = document.getElementById('downloadReports')
+        if(downloadBtn){
+          downloadBtn.style.display = ''
+          downloadBtn.addEventListener('click', async ()=>{
+            try{
+              const resp = await fetch(API_BASE + '/admin/reports', { headers: { Authorization: 'Bearer '+token } })
+              if(!resp.ok) throw new Error('Status '+resp.status)
+              const data = await resp.json()
+              if(!data || !data.length) return alert('No reports to download')
+
+              // build CSV rows: id, reporter/name, created_at, resolved, details
+              const rows = []
+              rows.push(['id','reporter','created_at','resolved','details'])
+              data.forEach(r=>{
+                const reporter = r.reporter_name || r.name || r.reporter || r.user || ''
+                const details = (r.details||'').toString().replace(/\r?\n/g,' ')
+                rows.push([r.id, reporter, r.created_at, r.resolved ? 'yes' : 'no', details])
+              })
+
+              const csv = rows.map(cols => cols.map(c => '"' + String(c).replace(/"/g,'""') + '"').join(',')).join('\r\n')
+              const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' })
+              const url = URL.createObjectURL(blob)
+              const a = document.createElement('a')
+              a.href = url
+              const now = new Date().toISOString().replace(/[:.]/g,'-')
+              a.download = `reports-${now}.csv`
+              document.body.appendChild(a)
+              a.click()
+              a.remove()
+              URL.revokeObjectURL(url)
+            }catch(err){ alert('Download failed: '+err.message) }
+          })
+        }
+
+        // fetch and render reports
+        async function fetchReports(){
+          try{
+            const res = await fetch(API_BASE+'/admin/reports', { headers: { Authorization: 'Bearer '+token } })
+            if(!res.ok) throw new Error('Status '+res.status)
+            const data = await res.json()
+            if(!data || !data.length) return adminReports.innerHTML = '<div class="muted">No reports yet.</div>'
+            adminReports.innerHTML = data.map(r => `
+              <div class="report-card">
+                <div style="display:flex;justify-content:space-between">
+                  <div>
+                    <strong>#${r.id}</strong>
+                    <div class="muted">${r.created_at}</div>
+                  </div>
+                  <div>
+                    ${r.resolved ? '<span class="muted">Resolved</span>' : `<button class="btn small resolve" data-id="${r.id}">Resolve</button>`}
+                    <button class="btn small delete" data-id="${r.id}">Delete</button>
+                  </div>
+                </div>
+                <div style="margin-top:8px">${(r.details||'')}</div>
+                ${r.screenshot_path ? `<div style="margin-top:6px"><a href="${r.screenshot_path}" target="_blank">View</a></div>` : ''}
+              </div>
+            `).join('\n')
+            document.querySelectorAll('.resolve').forEach(b=>b.addEventListener('click', async (e)=>{
+              const id = e.target.dataset.id
+              try{
+                const resp = await fetch(API_BASE+`/admin/reports/${id}/resolve`, { method:'POST', headers: { Authorization: 'Bearer '+token } })
+                if(!resp.ok) throw new Error('Failed')
+                fetchReports()
+              }catch(err){ alert('Could not resolve: '+err.message) }
+            }))
+            document.querySelectorAll('.delete').forEach(b=>b.addEventListener('click', async (e)=>{
+              const id = e.target.dataset.id
+              if(!confirm('Delete this report? This action cannot be undone.')) return
+              try{
+                const resp = await fetch(API_BASE+`/admin/reports/${id}`, { method:'DELETE', headers: { Authorization: 'Bearer '+token } })
+                if(!resp.ok) throw new Error('Failed')
+                fetchReports()
+              }catch(err){ alert('Could not delete: '+err.message) }
+            }))
+          }catch(err){ adminReports.innerHTML = '<div class="muted">Failed to load reports: '+err.message+'</div>' }
+        }
+
+        fetchReports()
+
+        logoutBtn.addEventListener('click', ()=>{ localStorage.removeItem('admin_token'); token = null; updateHeaderButtons(); window.location = 'index.html' })
+        backHome.addEventListener('click', ()=>{ window.location = 'index.html' })
+
+      })()
+    </script>
+  </body>
+</html>

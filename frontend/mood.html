@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mood Tracker — AI Cyberbullying Prevention</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="light">
+    <div class="app">
+      <header class="topbar">
+        <div class="brand">
+          <svg class="logo" width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="2" y="2" width="20" height="20" rx="4" fill="#0b67d0" />
+            <path d="M7 12h10M7 8h10M7 16h6" stroke="#fff" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <div>
+            <div class="title">Mood Tracker</div>
+            <div class="subtitle">Private mood journal</div>
+          </div>
+        </div>
+        <div class="top-actions">
+          <button id="backHome" class="btn ghost small">Home</button>
+          <button id="themeToggle" class="icon-btn" aria-label="Toggle theme" title="Toggle theme">
+            <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" fill="#0b67d0"></path>
+            </svg>
+          </button>
+        </div>
+      </header>
+
+      <main class="main">
+        <section style="margin-top:18px">
+          <div style="display:flex;justify-content:space-between;align-items:center">
+            <h2>Mood Tracker</h2>
+          </div>
+
+          <div style="margin-top:12px;max-width:700px">
+            <div class="mood-form" style="display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap">
+              <div style="min-width:220px">
+                <label for="moodSelect">How are you feeling?</label>
+                <select id="moodSelect" style="width:100%;padding:8px;border-radius:8px;margin-top:6px">
+                  <option value="positive">Positive</option>
+                  <option value="neutral">Neutral</option>
+                  <option value="sad">Sad</option>
+                  <option value="angry">Angry</option>
+                </select>
+              </div>
+
+              <div style="flex:1">
+                <label for="moodEntry">Journal entry (optional)</label>
+                <textarea id="moodEntry" placeholder="Write a short note about how you're feeling..." style="min-height:100px;width:100%;margin-top:6px;padding:10px;border-radius:8px;border:1px solid rgba(11,103,208,0.06)"></textarea>
+              </div>
+
+            </div>
+
+            <div class="row" style="margin-top:12px;gap:12px;align-items:center">
+              <button id="moodSubmit" class="btn primary">Save Mood</button>
+              <button id="showMoods" class="btn">Show saved moods</button>
+              <button id="clearAll" class="btn ghost" style="display:none">Clear All</button>
+            </div>
+            </div id="liveTime" style="margin-top:10px;color:#555;font-size:14px;"></div>
+
+            <div id="moodStatus" class="result" style="margin-top:12px"></div>
+          </div>
+
+          <hr style="margin:18px 0" />
+
+          <div id="moodList" style="max-width:900px"></div>
+
+        </section>
+      </main>
+
+      <footer class="footer site-footer">
+        <div class="footer-grid">
+          <div class="footer-col">
+            <div class="title">AI-Powered Cyberbullying Prevention</div>
+            <div class="muted">Private & anonymous. If you are in immediate danger, contact local emergency services.</div>
+          </div>
+          <div class="footer-col">
+            <div class="title">Quick links</div>
+            <ul class="footer-links">
+              <li><a href="index.html">Home</a></li>
+              <li><a href="admin.html">Admin</a></li>
+            </ul>
+          </div>
+          <div class="footer-col">
+            <div class="title">Get help</div>
+            <div class="muted">National Mental Health Helpline: <a href="tel:08046110007">08046110007</a></div>
+            <a class="help-link" href="https://www.cybercrime.gov.in/" target="_blank">Report to Cybercrime India</a>
+          </div>
+        </div>
+        <div class="footer-bottom">© <span id="year"></span> AI-Powered Cyberbullying Prevention System</div>
+      </footer>
+
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
