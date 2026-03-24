@@ -7,3 +7,5 @@ python-multipart
 requests
 transformers
 torch
+psycopg2-binary
+aiofiles
