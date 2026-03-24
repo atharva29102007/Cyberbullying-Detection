@@ -33,22 +33,15 @@ SEXUAL_WORDS = {
 # ----------------------------
 
 def clean_text(text: str):
-
     text = (text or "").strip()
-
     text = re.sub(r"https?://\S+", "", text)
-
     text = re.sub(r"[^\w\s]", "", text)
-
     return text.lower()
 
 
 def tokenize(text: str):
-
     text = clean_text(text)
-
     tokens = text.split()
-
     return tokens
 
 
@@ -57,7 +50,6 @@ def tokenize(text: str):
 # ----------------------------
 
 def detect_words(tokens, word_list):
-
     for t in tokens:
         if t in word_list:
             return True
@@ -69,12 +61,9 @@ def detect_words(tokens, word_list):
 # ----------------------------
 
 def sentiment_negative(text):
-
     sentiment = analyzer.polarity_scores(text)
-
     if sentiment["compound"] < -0.3:
         return True
-
     return False
 
 
@@ -83,9 +72,7 @@ def sentiment_negative(text):
 # ----------------------------
 
 def bullying_score(text):
-
     tokens = tokenize(text)
-
     score = 0
 
     if detect_words(tokens, INSULT_WORDS):
@@ -114,7 +101,6 @@ def bullying_score(text):
 # ----------------------------
 
 def supportive_response():
-
     return (
         "I'm really sorry that you're experiencing this. "
         "Cyberbullying can be very hurtful. Remember that it is not your fault. "
@@ -124,7 +110,6 @@ def supportive_response():
 
 
 def kindness_suggestion():
-
     return (
         "It may help to stay calm and avoid responding aggressively. "
         "Sometimes ignoring or blocking the person is the best option."
@@ -132,7 +117,6 @@ def kindness_suggestion():
 
 
 def positive_message():
-
     return (
         "I'm here to listen and support you. "
         "You can tell me what happened."
@@ -143,41 +127,28 @@ def positive_message():
 # CHAT RESPONSE
 # ----------------------------
 
-def chat_response(messages: list[dict]):
-
+def chat_response(messages: list):
     try:
-
         user_message = messages[-1]["content"]
-
         score = bullying_score(user_message)
-
         tokens = tokenize(user_message)
 
-        # Greeting
         if "hi" in tokens or "hello" in tokens:
-
             reply = "Hello! I'm here to support you. How can I help today?"
 
-        # Bullying detected
         elif score > 0.6:
-
             reply = supportive_response()
 
-        # Moderate risk
         elif score > 0.3:
-
             reply = kindness_suggestion()
 
-        # Sad emotions
         elif sentiment_negative(user_message):
-
             reply = (
                 "I'm sorry you're feeling this way. "
                 "If you'd like to talk about what's happening, I'm here."
             )
 
         else:
-
             reply = positive_message()
 
         return {
@@ -187,9 +158,7 @@ def chat_response(messages: list[dict]):
         }
 
     except Exception as e:
-
         print("Chat error:", e)
-
         return {
             "reply": "Something went wrong. Please try again.",
             "source": "error"
@@ -200,23 +169,18 @@ def chat_response(messages: list[dict]):
 # ROLEPLAY TRAINING
 # ----------------------------
 
-def simulate_roleplay(user_response: str):
-
+def simulate_roleplay(scenario: str, user_response: str):
     score = bullying_score(user_response)
 
     if score < 0.3:
-
         feedback = "That response was calm and constructive."
-
     elif score < 0.6:
-
         feedback = "Your response might escalate the situation. Try to stay calm."
-
     else:
-
         feedback = "This response is aggressive and may worsen the conflict."
 
     return {
+        "scenario": scenario,
         "feedback": feedback,
         "bullying_score": score
     }
@@ -227,17 +191,10 @@ def simulate_roleplay(user_response: str):
 # ----------------------------
 
 def analyze_text(text: str) -> Dict:
-
     bully = bullying_score(text)
-
     return {
-
         "bullying_score": bully,
-
         "is_bullying": bully > 0.5,
-
         "support_message": supportive_response(),
-
         "kindness_suggestion": kindness_suggestion()
-
     }
